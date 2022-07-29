@@ -5,7 +5,8 @@ import styled, { ThemeProvider } from "styled-components";
 import Quiz from "./page/Quiz";
 
 const RootLayout = styled.div`
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   background-color: ${(props) => props.theme.bgColor};
   display: flex;
   justify-content: center;
