@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, ChangeEvent } from "react";
 import { category } from "../../resources/category";
 import Container from "./SidebarList.styled";
-import useAjaxStore from "../../store/ajaxStore";
+import Hr from "../common/Hr.styled";
+import { SelectedCategory } from "../../page/Quiz";
 
-function SidebarList() {
-  const { getProblems } = useAjaxStore();
-  const [difficulty, setDifficulty] = useState<string>("any");
+interface Props {
+  setCategory: Dispatch<SetStateAction<SelectedCategory>>;
+  setDifficulty: Dispatch<SetStateAction<string>>;
+}
 
-  function selectDifficulty(e: React.ChangeEvent<HTMLSelectElement>): void {
+function SidebarList({ setCategory, setDifficulty }: Props) {
+  function selectDifficulty(e: ChangeEvent<HTMLSelectElement>): void {
     setDifficulty(e.target.value);
   }
 
-  function testStart(category_number: number): void {
-    getProblems(difficulty, category_number);
+  function testStart(v: { category: string; category_number: number }): void {
+    setCategory({ ...v });
   }
 
   return (
@@ -22,22 +25,23 @@ function SidebarList() {
         <span>난이도 선택:</span>
         <span className="select">
           <select onChange={selectDifficulty}>
-            <option value="any">Any Difficulty</option>
+            <option value="random">Random</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
         </span>
       </div>
+      <Hr />
       {category.map((v, i) => {
         return (
           <div key={i} className="category">
             <span>{v.category}</span>
             <button
               onClick={() => {
-                testStart(v.category_number);
+                testStart(v);
               }}>
-              test start
+              선택
             </button>
           </div>
         );
