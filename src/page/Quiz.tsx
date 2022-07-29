@@ -1,43 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/quiz/Header";
-import styled from "styled-components";
 import SidebarList from "../components/quiz/SidebarList";
+import Container from "./Quiz.styled";
+import useAjaxStore from "../store/ajaxStore";
+import SettingProblem from "../components/quiz/SettingProblem";
 
-const Container = styled.div`
-  width: inherit;
-
-  .content {
-    display: flex;
-    height: calc(100% - ${(props) => props.theme.headerHeight_web});
-
-    .sidebar {
-      flex: 1;
-      overflow-y: scroll;
-      ::-webkit-scrollbar {
-        width: 5px;
-        background: #eee;
-      } /* 스크롤 바 */
-      ::-webkit-scrollbar-thumb {
-        background: #69696967;
-        border-radius: ${(props) => props.theme.borderRadius};
-      } /* 실질적 스크롤 바 */
-    }
-    .main {
-      flex: 6;
-      overflow-y: scroll;
-    }
-  }
-`;
+export interface SelectedCategory {
+  category: string;
+  category_number: number;
+}
 
 function Quiz() {
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "일반지식", category_number: 10 });
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("random");
+  const { results } = useAjaxStore();
+
+  console.log(results);
+
   return (
     <Container>
       <Header />
       <div className="content">
         <div className="sidebar">
-          <SidebarList />
+          <SidebarList setCategory={setSelectedCategory} setDifficulty={setSelectedDifficulty} />
         </div>
-        <div className="main"></div>
+        <div className="main">{results ? <div>문제 도착햇사</div> : <SettingProblem category={selectedCategory.category} difficulty={selectedDifficulty} />}</div>
       </div>
     </Container>
   );
