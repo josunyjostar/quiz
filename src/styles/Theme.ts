@@ -3,6 +3,7 @@ const theme = {
   bgColor: "snow",
   btnBgColor: "Lavender",
   subjectColor: "#296caa",
+  btnHoverColor: "dodgerblue",
   //font
   contentfontSize_web: "17px",
   contentfontSize_tablet: "14px",

@@ -1,12 +1,20 @@
 import React from "react";
 import Container from "./SettingProblem.styled";
+import ajaxStore from "../../../store/ajaxStore";
+import { SelectedCategory } from "../../../page/Quiz";
 
 interface Props {
-  category: string;
+  data: SelectedCategory;
   difficulty: string;
 }
 
-function SettingProblem({ category, difficulty }: Props) {
+function SettingProblem({ data, difficulty }: Props) {
+  const { getProblems } = ajaxStore();
+
+  function testStart() {
+    getProblems(difficulty, data.category_number);
+  }
+
   return (
     <Container>
       <div>{`[문제 선택]`}</div>
@@ -18,13 +26,14 @@ function SettingProblem({ category, difficulty }: Props) {
         <div className="right">
           <div>
             {`: `}
-            <em>{category}</em>
+            <em>{data.category}</em>
           </div>
           <div>
             {`: `} <em>{`${difficulty}`}</em>
           </div>
         </div>
       </div>
+      <button onClick={testStart}>문제 풀이 시작</button>
     </Container>
   );
 }

@@ -24,7 +24,7 @@ function Quiz() {
         <div className="sidebar">
           <SidebarList setCategory={setSelectedCategory} setDifficulty={setSelectedDifficulty} />
         </div>
-        <div className="main">{results ? <div>문제 도착햇사</div> : <SettingProblem category={selectedCategory.category} difficulty={selectedDifficulty} />}</div>
+        <div className="main">{results ? <div>풀이 시작시 문제 렌더링 장소</div> : <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} />}</div>
       </div>
     </Container>
   );

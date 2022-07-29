@@ -21,6 +21,17 @@ const Container = styled.div`
       }
     }
   }
+  button {
+    margin-top: 10px;
+    font-size: ${(props) => props.theme.h6FontSize_web};
+    border: none;
+    border-radius: ${(props) => props.theme.borderRadius};
+    padding: 5px;
+    transition: background-color 0.15s ease;
+  }
+  button:hover {
+    background-color: ${(props) => props.theme.btnHoverColor};
+  }
 `;
 
 export default Container;
