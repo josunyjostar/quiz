@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { category } from "../../resources/category";
 import Container from "./SidebarList.styled";
-
-//https://opentdb.com/api.php?amount=10&type=multiple 수량 / 타입
-//https://opentdb.com/api.php?amount=10&category=21&type=multiple 카테고리 추가
-//https://opentdb.com/api.php?amount=10&category=11&difficulty=hard&type=multiple 난이도 추가
+import useAjaxStore from "../../store/ajaxStore";
 
 function SidebarList() {
-  const [query, setDifficulty] = useState<string>("any");
+  const { getProblems } = useAjaxStore();
+  const [difficulty, setDifficulty] = useState<string>("any");
 
-  function selectDifficulty(e: React.ChangeEvent<HTMLSelectElement>) {
+  function selectDifficulty(e: React.ChangeEvent<HTMLSelectElement>): void {
     setDifficulty(e.target.value);
   }
 
   function testStart(category_number: number): void {
-    console.log(query, category_number);
+    getProblems(difficulty, category_number);
   }
 
   return (
