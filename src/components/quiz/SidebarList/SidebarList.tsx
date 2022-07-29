@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, ChangeEvent } from "react";
-import { category } from "../../resources/category";
+import { category } from "../../../resources/category";
 import Container from "./SidebarList.styled";
-import Hr from "../common/Hr.styled";
-import { SelectedCategory } from "../../page/Quiz";
+import Hr from "../../common/Hr.styled";
+import { SelectedCategory } from "../../../page/Quiz";
 
 interface Props {
   setCategory: Dispatch<SetStateAction<SelectedCategory>>;

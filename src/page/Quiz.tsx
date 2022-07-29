@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "../components/quiz/Header";
-import SidebarList from "../components/quiz/SidebarList";
+import Header from "../components/quiz/Header/Header";
+import SidebarList from "../components/quiz/SidebarList/SidebarList";
 import Container from "./Quiz.styled";
 import useAjaxStore from "../store/ajaxStore";
-import SettingProblem from "../components/quiz/SettingProblem";
+import SettingProblem from "../components/quiz/SettingProblem/SettingProblem";
 
 export interface SelectedCategory {
   category: string;
