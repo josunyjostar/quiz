@@ -72,7 +72,7 @@ function ProblemList({ problems }: Props) {
     <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
       <div className="progress">
         {isEnd ? <span className="current-progress">마지막 문제 입니다.</span> : <span className="current-progress">{`total ${idx}/${problems.length}`}</span>}
-        <Timer />
+        <Timer isEnd={isEnd && isSelected} />
       </div>
       {problems.slice(offset, offset + 1).map((v, i) => {
         if (!v.incorrect_answers.includes(v.correct_answer)) {

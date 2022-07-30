@@ -9,13 +9,18 @@ const Container = styled.span`
   }
 `;
 
-function Timer() {
+interface Props {
+  isEnd: boolean;
+}
+
+function Timer({ isEnd }: Props) {
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [hour, setHour] = useState<number>(0);
 
   const count = useCallback(() => {
     setSeconds((sec) => {
+      if (isEnd) return sec;
       if (sec > 59) {
         setMinutes((min) => {
           if (min > 59) {
@@ -30,7 +35,7 @@ function Timer() {
         return sec + 1;
       }
     });
-  }, [setMinutes, setSeconds, setHour]);
+  }, [setMinutes, setSeconds, setHour, isEnd]);
 
   useInterval(count, 1000);
 
