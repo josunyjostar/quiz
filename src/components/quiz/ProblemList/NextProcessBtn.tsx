@@ -4,6 +4,7 @@ import Btn from "../../common/Btn.styled";
 
 interface StyledProps {
   isSelected: boolean;
+  isOpenAnswer: boolean;
 }
 
 const Container = styled(Btn)<StyledProps>`
@@ -18,20 +19,21 @@ const Container = styled(Btn)<StyledProps>`
     visibility: ${(props) => (props.isSelected ? "visible" : "hidden")};
   }
   button:last-child {
-    visibility: hidden;
+    visibility: ${(props) => (props.isOpenAnswer ? "visible" : "hidden")};
   }
 `;
 
 interface Props {
   isSelected: boolean;
+  isOpenAnswer: boolean;
+  openAnswer: () => void;
 }
 
-function NextProcessBtn({ isSelected }: Props) {
-  console.log(isSelected);
+function NextProcessBtn({ isSelected, openAnswer, isOpenAnswer }: Props) {
   return (
-    <Container isSelected={isSelected}>
+    <Container isSelected={isSelected} isOpenAnswer={isOpenAnswer}>
       <button></button>
-      <button>정답 확인</button>
+      <button onClick={openAnswer}>정답 확인</button>
       <button>다음 문제</button>
     </Container>
   );
