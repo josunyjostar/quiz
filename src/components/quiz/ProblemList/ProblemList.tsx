@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Problem } from "../../../store/ajaxStore";
 import Hr from "../../common/Hr.styled";
 import NextProcessBtn from "./NextProcessBtn";
 import styled from "styled-components";
 
-const Container = styled.div`
+interface StyledProps {
+  isOpenAnswer: boolean;
+}
+
+const Container = styled.div<StyledProps>`
   font-size: 20px;
   margin-top: 110px;
   padding: 10px;
@@ -35,13 +39,23 @@ const Container = styled.div`
         margin: 0px 10px 0 0;
         vertical-align: middle;
         border-radius: 5px;
-        cursor: pointer;
-        border: 1px solid dodgerblue;
+        cursor: ${(props) => (props.isOpenAnswer ? "not-allowed" : "pointer")};
+        border: 1px solid ${(props) => (props.isOpenAnswer ? "gray" : "dodgerblue")};
         background: url("bg_chkbox.png") 0 0 no-repeat;
+        filter: ${(props) => (props.isOpenAnswer ? "grayscale(100%)" : "none")};
       }
       input[type="checkbox"]:checked + label span {
         background-position: -39px -1px;
       }
+      .mark {
+        margin-left: 10px;
+      }
+    }
+    .correct {
+    }
+    .incorrect {
+      text-decoration: ${(props) => (props.isOpenAnswer ? "line-through" : "none")};
+      color: ${(props) => (props.isOpenAnswer ? "red" : "#222")};
     }
   }
 `;
@@ -53,11 +67,15 @@ interface Props {
 function ProblemList({ problems }: Props) {
   const [idx, setIdx] = useState<number>(1);
   const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<string>("setAnswer");
+  const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string>("setSelectedAnswer");
+
   const offset: number = idx - 1;
   const correctIdx = Math.floor(Math.random() * 4);
 
   // console.log(problems);
-  console.log(problems);
+  // console.log(answer);
 
   function eventStop(e: React.MouseEvent) {
     e.stopPropagation();
@@ -74,6 +92,9 @@ function ProblemList({ problems }: Props) {
           if (list2[key2] instanceof HTMLInputElement) {
             if (cur === (list2[key2] as HTMLInputElement).value) {
               isCheck ||= (list2[key2] as HTMLInputElement).checked;
+              {
+                isCheck ? setSelectedAnswer((list2[key2] as HTMLInputElement).value) : setSelectedAnswer("");
+              }
               continue;
             }
             (list2[key2] as HTMLInputElement).checked = false;
@@ -84,10 +105,22 @@ function ProblemList({ problems }: Props) {
     }
   }
 
+  function openAnswer() {
+    setOpenAnswer(() => true);
+    if (answer === selectedAnswer) {
+      console.log("정답");
+    } else {
+      console.log("오답");
+    }
+  }
+
   return (
-    <Container>
+    <Container isOpenAnswer={isOpenAnswer}>
       {problems.slice(offset, offset + 1).map((v, i) => {
-        if (!v.incorrect_answers.includes(v.correct_answer)) v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
+        if (!v.incorrect_answers.includes(v.correct_answer)) {
+          setAnswer(v.correct_answer);
+          v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
+        }
         return (
           <div key={i}>
             <strong>{`${offset + 1}. ${v.question}`}</strong>
@@ -105,18 +138,20 @@ function ProblemList({ problems }: Props) {
             <Hr />
             <div onClick={checkOnly} className="question-shell">
               {v.incorrect_answers.map((val, i) => {
+                const isCorrect = val === v.correct_answer;
                 return (
                   <div key={i} className="question">
-                    <input type="checkbox" value={val} required id={`checked${i}`} />
+                    <input type="checkbox" value={val} required id={`checked${i}`} disabled={isOpenAnswer} />
                     <label htmlFor={`checked${i}`} onClick={eventStop}>
                       <span onClick={eventStop}></span>
                     </label>
-                    <span onClick={eventStop}>{`${i + 1}. ${val}`}</span>
+                    <span onClick={eventStop} className={isCorrect ? "correct" : "incorrect"}>{`${i + 1}. ${val}`}</span>
+                    {isOpenAnswer ? <span className="mark">{isCorrect ? "정답" : "오답"}</span> : null}
                   </div>
                 );
               })}
+              <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} />
             </div>
-            <NextProcessBtn isSelected={isSelected} />
           </div>
         );
       })}
