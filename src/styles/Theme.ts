@@ -1,9 +1,9 @@
 const theme = {
   //color
   bgColor: "snow",
-  btnBgColor: "Lavender",
   subjectColor: "#296caa",
-  btnHoverColor: "dodgerblue",
+  btnBgColor: "dodgerblue",
+  btnHoverColor: "#ff7675",
   //font
   contentfontSize_web: "17px",
   contentfontSize_tablet: "14px",

@@ -4,6 +4,7 @@ import SidebarList from "../components/quiz/SidebarList/SidebarList";
 import Container from "./Quiz.styled";
 import useAjaxStore from "../store/ajaxStore";
 import SettingProblem from "../components/quiz/SettingProblem/SettingProblem";
+import ProblemList from "../components/quiz/ProblemList/ProblemList";
 
 export interface SelectedCategory {
   category: string;
@@ -13,9 +14,7 @@ export interface SelectedCategory {
 function Quiz() {
   const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "일반지식", category_number: 10 });
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("random");
-  const { results } = useAjaxStore();
-
-  console.log(results);
+  const { problems } = useAjaxStore();
 
   return (
     <Container>
@@ -24,7 +23,7 @@ function Quiz() {
         <div className="sidebar">
           <SidebarList setCategory={setSelectedCategory} setDifficulty={setSelectedDifficulty} />
         </div>
-        <div className="main">{results ? <div>풀이 시작시 문제 렌더링 장소</div> : <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} />}</div>
+        <div className="main">{problems ? <ProblemList problems={problems} /> : <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} />}</div>
       </div>
     </Container>
   );

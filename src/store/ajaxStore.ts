@@ -1,7 +1,7 @@
 import create from "zustand";
 import axios from "axios";
 
-interface Problem {
+export interface Problem {
   category: string;
   type: string;
   difficulty: string;
@@ -10,8 +10,8 @@ interface Problem {
   incorrect_answers: string[];
 }
 
-interface ProblemList {
-  results: Problem[] | null;
+interface ProblemStore {
+  problems: Problem[] | null;
   getProblems: (difficulty: string, category_number: number) => void;
 }
 
@@ -19,8 +19,8 @@ interface ProblemList {
 //https://opentdb.com/api.php?amount=10&category=21&type=multiple 카테고리 추가
 //https://opentdb.com/api.php?amount=10&category=11&difficulty=hard&type=multiple 난이도 추가
 
-const ajaxStore = create<ProblemList>((set) => ({
-  results: null,
+const ajaxStore = create<ProblemStore>((set) => ({
+  problems: null,
   getProblems: async (difficulty, category_number) => {
     try {
       let uri = "";
@@ -31,7 +31,7 @@ const ajaxStore = create<ProblemList>((set) => ({
       } = await axios.get(process.env.REACT_APP_API_URL + `amount=10&category=${category_number}` + uri + "&type=multiple");
 
       set(() => ({
-        results: results,
+        problems: results,
       }));
     } catch (err) {
       console.log("getProblems error:::", err);
