@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import Btn from "../../common/Btn.styled";
 
-const Container = styled.div`
+const Container = styled(Btn)`
   display: flex;
   flex-direction: column;
   font-size: ${(props) => props.theme.h6FontSize_web};
