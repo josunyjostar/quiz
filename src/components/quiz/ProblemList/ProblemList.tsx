@@ -6,12 +6,20 @@ import styled from "styled-components";
 
 interface StyledProps {
   isOpenAnswer: boolean;
+  isSelected: boolean;
 }
 
 const Container = styled.div<StyledProps>`
   font-size: 20px;
-  margin-top: 110px;
+  margin-top: 100px;
   padding: 10px;
+
+  width: ${(props) => props.theme.mobileWidth - props.theme.sidebarWidth + "px"};
+
+  p {
+    font-size: 18px;
+  }
+
   .property {
     margin-top: 5px;
     margin-bottom: 10px;
@@ -45,7 +53,7 @@ const Container = styled.div<StyledProps>`
         filter: ${(props) => (props.isOpenAnswer ? "grayscale(100%)" : "none")};
       }
       input[type="checkbox"]:checked + label span {
-        background-position: -39px -1px;
+        background-position: ${(props) => (props.isSelected ? "-39px -1px" : "0")};
       }
       .mark {
         margin-left: 10px;
@@ -67,15 +75,20 @@ interface Props {
 function ProblemList({ problems }: Props) {
   const [idx, setIdx] = useState<number>(1);
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<string>("setAnswer");
   const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<string>("setAnswer");
   const [selectedAnswer, setSelectedAnswer] = useState<string>("setSelectedAnswer");
 
   const offset: number = idx - 1;
-  const correctIdx = Math.floor(Math.random() * 4);
+  const isEnd: boolean = problems.length === idx;
+  console.log(isEnd);
 
-  // console.log(problems);
-  // console.log(answer);
+  function stateInit() {
+    setIsSelected(() => false);
+    setOpenAnswer(() => false);
+    setAnswer("setAnswer");
+    setSelectedAnswer("setSelectedAnswer");
+  }
 
   function eventStop(e: React.MouseEvent) {
     e.stopPropagation();
@@ -114,11 +127,18 @@ function ProblemList({ problems }: Props) {
     }
   }
 
+  function nextProblem() {
+    stateInit();
+    setIdx((pre) => pre + 1);
+  }
+
   return (
-    <Container isOpenAnswer={isOpenAnswer}>
+    <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
+      {isEnd ? <p>마지막 문제 입니다.</p> : <p>{`총 ${problems.length}문제 입니다.`}</p>}
       {problems.slice(offset, offset + 1).map((v, i) => {
         if (!v.incorrect_answers.includes(v.correct_answer)) {
           setAnswer(v.correct_answer);
+          const correctIdx = Math.floor(Math.random() * 4);
           v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
         }
         return (
@@ -150,7 +170,7 @@ function ProblemList({ problems }: Props) {
                   </div>
                 );
               })}
-              <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} />
+              <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} nextProblem={nextProblem} isEnd={isEnd} />
             </div>
           </div>
         );
