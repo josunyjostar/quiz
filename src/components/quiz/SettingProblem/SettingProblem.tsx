@@ -17,23 +17,25 @@ function SettingProblem({ data, difficulty }: Props) {
 
   return (
     <Container>
-      <div>{`[문제 선택]`}</div>
-      <div className="selected">
-        <div>
-          <div>{`범주`}</div>
-          <div>{`난이도`}</div>
-        </div>
-        <div className="right">
+      <div className="shell">
+        <div>{`[문제 선택]`}</div>
+        <div className="selected">
           <div>
-            {`: `}
-            <em>{data.category}</em>
+            <div>{`범주`}</div>
+            <div>{`난이도`}</div>
           </div>
-          <div>
-            {`: `} <em>{`${difficulty}`}</em>
+          <div className="right">
+            <div>
+              {`: `}
+              <em>{data.category}</em>
+            </div>
+            <div>
+              {`: `} <em>{`${difficulty}`}</em>
+            </div>
           </div>
         </div>
+        <button onClick={testStart}>문제 풀이 시작</button>
       </div>
-      <button onClick={testStart}>문제 풀이 시작</button>
     </Container>
   );
 }

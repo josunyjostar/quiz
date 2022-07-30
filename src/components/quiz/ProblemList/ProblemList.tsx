@@ -1,72 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Problem } from "../../../store/ajaxStore";
 import Hr from "../../common/Hr.styled";
-import NextProcessBtn from "./NextProcessBtn";
-import styled from "styled-components";
-
-interface StyledProps {
-  isOpenAnswer: boolean;
-  isSelected: boolean;
-}
-
-const Container = styled.div<StyledProps>`
-  font-size: 20px;
-  margin-top: 100px;
-  padding: 10px;
-
-  width: ${(props) => props.theme.mobileWidth - props.theme.sidebarWidth + "px"};
-
-  p {
-    font-size: 18px;
-  }
-
-  .property {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    span {
-      color: dimGray;
-      margin: 0 3px;
-    }
-    em {
-      margin-left: 5px;
-    }
-  }
-  .question-shell {
-    margin-top: 10px;
-
-    .question {
-      margin-top: 5px;
-      input[type="checkbox"] {
-        display: none;
-      }
-      input[type="checkbox"] + label span {
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        margin: 0px 10px 0 0;
-        vertical-align: middle;
-        border-radius: 5px;
-        cursor: ${(props) => (props.isOpenAnswer ? "not-allowed" : "pointer")};
-        border: 1px solid ${(props) => (props.isOpenAnswer ? "gray" : "dodgerblue")};
-        background: url("bg_chkbox.png") 0 0 no-repeat;
-        filter: ${(props) => (props.isOpenAnswer ? "grayscale(100%)" : "none")};
-      }
-      input[type="checkbox"]:checked + label span {
-        background-position: ${(props) => (props.isSelected ? "-39px -1px" : "0")};
-      }
-      .mark {
-        margin-left: 10px;
-      }
-    }
-    .correct {
-    }
-    .incorrect {
-      text-decoration: ${(props) => (props.isOpenAnswer ? "line-through" : "none")};
-      color: ${(props) => (props.isOpenAnswer ? "red" : "#222")};
-    }
-  }
-`;
+import NextProcessBtn from "./NextProcessBtn/NextProcessBtn";
+import Timer from "./Timer/Timer";
+import Container from "./ProblemList.styled";
 
 interface Props {
   problems: Problem[];
@@ -81,7 +18,6 @@ function ProblemList({ problems }: Props) {
 
   const offset: number = idx - 1;
   const isEnd: boolean = problems.length === idx;
-  console.log(isEnd);
 
   function stateInit() {
     setIsSelected(() => false);
@@ -134,7 +70,10 @@ function ProblemList({ problems }: Props) {
 
   return (
     <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
-      {isEnd ? <p>마지막 문제 입니다.</p> : <p>{`총 ${problems.length}문제 입니다.`}</p>}
+      <div className="progress">
+        {isEnd ? <span className="current-progress">마지막 문제 입니다.</span> : <span className="current-progress">{`total ${idx}/${problems.length}`}</span>}
+        <Timer />
+      </div>
       {problems.slice(offset, offset + 1).map((v, i) => {
         if (!v.incorrect_answers.includes(v.correct_answer)) {
           setAnswer(v.correct_answer);
@@ -142,35 +81,37 @@ function ProblemList({ problems }: Props) {
           v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
         }
         return (
-          <div key={i}>
-            <strong>{`${offset + 1}. ${v.question}`}</strong>
-            <div className="property">
-              (
-              <span>
-                category:<em>{v.category}</em>
-              </span>
-              /
-              <span>
-                difficulty:<em>{v.difficulty}</em>
-              </span>
-              )
-            </div>
-            <Hr />
-            <div onClick={checkOnly} className="question-shell">
-              {v.incorrect_answers.map((val, i) => {
-                const isCorrect = val === v.correct_answer;
-                return (
-                  <div key={i} className="question">
-                    <input type="checkbox" value={val} required id={`checked${i}`} disabled={isOpenAnswer} />
-                    <label htmlFor={`checked${i}`} onClick={eventStop}>
-                      <span onClick={eventStop}></span>
-                    </label>
-                    <span onClick={eventStop} className={isCorrect ? "correct" : "incorrect"}>{`${i + 1}. ${val}`}</span>
-                    {isOpenAnswer ? <span className="mark">{isCorrect ? "정답" : "오답"}</span> : null}
-                  </div>
-                );
-              })}
-              <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} nextProblem={nextProblem} isEnd={isEnd} />
+          <div key={i} className="shell">
+            <div>
+              <strong>{`${offset + 1}. ${v.question}`}</strong>
+              <div className="property">
+                (
+                <span>
+                  category:<em>{v.category}</em>
+                </span>
+                /
+                <span>
+                  difficulty:<em>{v.difficulty}</em>
+                </span>
+                )
+              </div>
+              <Hr />
+              <div onClick={checkOnly} className="question-shell">
+                {v.incorrect_answers.map((val, i) => {
+                  const isCorrect = val === v.correct_answer;
+                  return (
+                    <div key={i} className="question">
+                      <input type="checkbox" value={val} required id={`checked${i}`} disabled={isOpenAnswer} />
+                      <label htmlFor={`checked${i}`} onClick={eventStop}>
+                        <span onClick={eventStop}></span>
+                      </label>
+                      <span onClick={eventStop} className={isCorrect ? "correct" : "incorrect"}>{`${i + 1}. ${val}`}</span>
+                      {isOpenAnswer ? <span className="mark">{isCorrect ? "정답" : "오답"}</span> : null}
+                    </div>
+                  );
+                })}
+                <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} nextProblem={nextProblem} isEnd={isEnd} />
+              </div>
             </div>
           </div>
         );

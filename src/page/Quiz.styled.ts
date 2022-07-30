@@ -22,8 +22,6 @@ const Container = styled.div`
     .main {
       flex: 1;
       overflow-y: scroll;
-      display: flex;
-      justify-content: center;
     }
   }
 `;
