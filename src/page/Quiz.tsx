@@ -12,7 +12,7 @@ export interface SelectedCategory {
 }
 
 function Quiz() {
-  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "일반지식", category_number: 10 });
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "아무거나", category_number: -1 });
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("random");
   const { problems } = useAjaxStore();
 

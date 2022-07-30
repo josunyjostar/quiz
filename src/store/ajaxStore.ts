@@ -21,14 +21,15 @@ interface ProblemStore {
 
 const ajaxStore = create<ProblemStore>((set) => ({
   problems: null,
-  getProblems: async (difficulty, category_number) => {
+  getProblems: async (_difficulty, category_number) => {
     try {
-      let uri = "";
-      if (difficulty !== "random") uri += `&difficulty=${difficulty}`;
-
+      let difficulty = "";
+      let category = "";
+      if (_difficulty !== "random") difficulty += `&difficulty=${_difficulty}`;
+      if (category_number !== -1) category += `&category=${category_number}`;
       const {
         data: { results },
-      } = await axios.get(process.env.REACT_APP_API_URL + `amount=10&category=${category_number}` + uri + "&type=multiple");
+      } = await axios.get(process.env.REACT_APP_API_URL + `amount=10` + category + difficulty + "&type=multiple");
 
       set(() => ({
         problems: results,
