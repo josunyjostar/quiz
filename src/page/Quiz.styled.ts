@@ -8,7 +8,7 @@ const Container = styled.div`
     height: calc(100% - ${(props) => props.theme.headerHeight_web});
 
     .sidebar {
-      flex-basis: 250px;
+      flex-basis: ${(props) => props.theme.sidebarWidth + "px"};
       overflow-y: scroll;
       ::-webkit-scrollbar {
         width: 5px;

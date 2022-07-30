@@ -20,6 +20,8 @@ const theme = {
   containerPaddingLR_tablet: "15px",
   containerPaddingLR_mobile: "4px",
   headerHeight_web: "70px",
+  sidebarWidth: 250,
+  mobileWidth: 767,
 };
 
 export default theme;
