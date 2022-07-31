@@ -20,7 +20,7 @@ const theme = {
   containerPaddingLR_tablet: "15px",
   containerPaddingLR_mobile: "4px",
   headerHeight_web: "70px",
-  sidebarWidth: 250,
+  sidebarWidth: 240,
   sidebarOptionHeight: "149px",
   mobileWidth: 767,
 };

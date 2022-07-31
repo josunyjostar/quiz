@@ -44,7 +44,7 @@ const Container = styled.div<StyledProps>`
       margin-top: 10px;
 
       .question {
-        margin-top: 5px;
+        padding: 5px 5px;
         input[type="checkbox"] {
           display: none;
         }

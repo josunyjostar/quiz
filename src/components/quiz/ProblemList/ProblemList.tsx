@@ -20,6 +20,8 @@ function ProblemList({ problems, candidateName }: Props) {
   const offset: number = idx - 1;
   const isEnd: boolean = problems.length === idx;
 
+  // console.log(idx + 1, "선택됨", isSelected, "정답확인", isOpenAnswer);
+
   function stateInit() {
     setIsSelected(() => false);
     setOpenAnswer(() => false);
@@ -41,10 +43,8 @@ function ProblemList({ problems, candidateName }: Props) {
         for (const key2 of list2.keys()) {
           if (list2[key2] instanceof HTMLInputElement) {
             if (cur === (list2[key2] as HTMLInputElement).value) {
-              isCheck ||= (list2[key2] as HTMLInputElement).checked;
-              {
-                isCheck ? setSelectedAnswer((list2[key2] as HTMLInputElement).value) : setSelectedAnswer("");
-              }
+              isCheck = (list2[key2] as HTMLInputElement).checked = true;
+              setSelectedAnswer((list2[key2] as HTMLInputElement).value);
               continue;
             }
             (list2[key2] as HTMLInputElement).checked = false;
@@ -104,11 +104,17 @@ function ProblemList({ problems, candidateName }: Props) {
                   return (
                     <div key={i} className="question">
                       <input type="checkbox" value={val} required id={`checked${i}`} disabled={isOpenAnswer} />
-                      <label htmlFor={`checked${i}`} onClick={eventStop}>
-                        <span onClick={eventStop}></span>
+                      <label htmlFor={`checked${i}`}>
+                        <span></span>
                       </label>
-                      <span onClick={eventStop} className={isCorrect ? "correct" : "incorrect"}>{`${i + 1}. ${val}`}</span>
-                      {isOpenAnswer ? <span className="mark">{isCorrect ? "정답" : "오답"}</span> : null}
+                      <label htmlFor={`checked${i}`}>
+                        <span className={isCorrect ? "correct" : "incorrect"}>{`${i + 1}. ${val}`}</span>
+                      </label>
+                      {isOpenAnswer ? (
+                        <span className="mark" onClick={eventStop}>
+                          {isCorrect ? "정답" : "오답"}
+                        </span>
+                      ) : null}
                     </div>
                   );
                 })}
