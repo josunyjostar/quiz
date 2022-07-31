@@ -7,6 +7,7 @@ import SettingProblem from "../components/quiz/SettingProblem/SettingProblem";
 import ProblemList from "../components/quiz/ProblemList/ProblemList";
 import Popup from "../components/quiz/Popup/Popup";
 import { Route, Routes } from "react-router-dom";
+import ResultPage from "../components/quiz/ResultPage/ResultPage";
 export interface SelectedCategory {
   category: string;
   category_number: number;
@@ -35,6 +36,7 @@ function Quiz() {
               element={<SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} setIsRequired={setIsRequired} />}
             />
             <Route path="/test" element={<ProblemList problems={problems} candidateName={candidateName} />} />
+            <Route path="/result" element={<ResultPage />} />
           </Routes>
         </div>
       </div>

@@ -7,6 +7,7 @@ import Container from "./ProblemList.styled";
 import { ProblemResult, TestResult } from "../../../store/ajaxStore";
 import moment from "moment";
 import ajaxStore from "../../../store/ajaxStore";
+import Loading from "../Loading/Loading";
 interface Props {
   problems: Problem[];
   candidateName: string;
@@ -91,7 +92,7 @@ function ProblemList({ problems, candidateName }: Props) {
   }
 
   if (problems.length <= 0) {
-    return <h1>문제로딩 작성란</h1>;
+    return <Loading />;
   }
 
   return (
