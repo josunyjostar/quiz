@@ -20,32 +20,37 @@ function SidebarList({ setCategory, setDifficulty }: Props) {
 
   return (
     <Container>
-      <h6>Quiz Category</h6>
-      <div className="difficulty-select">
-        <span>난이도 선택:</span>
-        <span className="select">
-          <select onChange={selectDifficulty}>
-            <option value="random">Random</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </span>
+      <div className="option">
+        <h6>Quiz Category</h6>
+        <div className="option-select">
+          <span>난이도 선택:</span>
+          <span className="select">
+            <select onChange={selectDifficulty}>
+              <option value="random">Random</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </span>
+        </div>
+        <div className="difficulty-select"></div>
+        <Hr />
       </div>
-      <Hr />
-      {category.map((v, i) => {
-        return (
-          <div key={i} className="category">
-            <span>{v.category}</span>
-            <button
-              onClick={() => {
-                testStart(v);
-              }}>
-              선택
-            </button>
-          </div>
-        );
-      })}
+      <div className="category">
+        {category.map((v, i) => {
+          return (
+            <div key={i} className="topic">
+              <span>{v.category}</span>
+              <button
+                onClick={() => {
+                  testStart(v);
+                }}>
+                선택
+              </button>
+            </div>
+          );
+        })}
+      </div>
     </Container>
   );
 }

@@ -9,15 +9,6 @@ const Container = styled.div`
 
     .sidebar {
       flex-basis: ${(props) => props.theme.sidebarWidth + "px"};
-      overflow-y: scroll;
-      ::-webkit-scrollbar {
-        width: 5px;
-        background: #eee;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #69696967;
-        border-radius: ${(props) => props.theme.borderRadius};
-      }
     }
     .main {
       flex: 1;
