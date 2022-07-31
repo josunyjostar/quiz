@@ -5,6 +5,7 @@ const theme = {
   btnBgColor: "dodgerblue",
   btnHoverColor: "#ff7675",
   //font
+  resultFontSz_web: "22px",
   contentfontSize_web: "17px",
   contentfontSize_tablet: "14px",
   contentfontSize_mobile: "12px",

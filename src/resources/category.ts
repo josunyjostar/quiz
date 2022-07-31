@@ -1,5 +1,5 @@
 export const category: { category: string; category_number: number }[] = [
-  { category: "아무거나", category_number: -1 },
+  { category: "무작위", category_number: -1 },
   { category: "일반지식", category_number: 9 },
   { category: "책", category_number: 10 },
   { category: "영화", category_number: 11 },

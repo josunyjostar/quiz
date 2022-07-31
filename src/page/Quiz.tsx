@@ -14,7 +14,7 @@ export interface SelectedCategory {
 }
 
 function Quiz() {
-  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "아무거나", category_number: -1 });
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "무작위", category_number: -1 });
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("random");
   const [selectedProblemCnt, setSelectedProblemCnt] = useState<number>(10);
   const [candidateName, setCandidateName] = useState<string>("");
@@ -35,7 +35,7 @@ function Quiz() {
               path="/"
               element={<SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} setIsRequired={setIsRequired} />}
             />
-            <Route path="/test" element={<ProblemList problems={problems} candidateName={candidateName} />} />
+            <Route path="/test" element={<ProblemList problems={problems} candidateName={candidateName} selectedDifficulty={selectedDifficulty} selectedCategory={selectedCategory.category} />} />
             <Route path="/result" element={<ResultPage />} />
           </Routes>
         </div>

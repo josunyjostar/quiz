@@ -8,12 +8,15 @@ import { ProblemResult, TestResult } from "../../../store/ajaxStore";
 import moment from "moment";
 import ajaxStore from "../../../store/ajaxStore";
 import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 interface Props {
   problems: Problem[];
   candidateName: string;
+  selectedDifficulty: string;
+  selectedCategory: string;
 }
 
-function ProblemList({ problems, candidateName }: Props) {
+function ProblemList({ problems, candidateName, selectedDifficulty, selectedCategory }: Props) {
   const [idx, setIdx] = useState<number>(1);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
@@ -21,6 +24,7 @@ function ProblemList({ problems, candidateName }: Props) {
   const [runTime, setRunTime] = useState<string>("00:00:00");
   const [selectedAnswer, setSelectedAnswer] = useState<string>("setSelectedAnswer");
   const [ansewerPaper, setAnsewerPaper] = useState<Array<ProblemResult>>([]);
+  const navigate = useNavigate();
 
   const offset: number = idx - 1;
   const isEnd: boolean = problems.length === idx;
@@ -83,11 +87,14 @@ function ProblemList({ problems, candidateName }: Props) {
   function submitPaper() {
     const paper: TestResult = {
       candidateName: candidateName,
+      category: selectedCategory,
+      difficulty: selectedDifficulty,
       testDate: moment().format("MM-DD"),
       totalTime: runTime,
       results: ansewerPaper,
     };
     submitTest(paper);
+    navigate("/result");
     console.log(paper);
   }
 
