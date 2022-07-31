@@ -14,6 +14,9 @@ export interface SelectedCategory {
 function Quiz() {
   const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({ category: "아무거나", category_number: -1 });
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("random");
+  const [selectedProblemCnt, setSelectedProblemCnt] = useState<number>(10);
+  const [candidateName, setCandidateName] = useState<string>("null");
+  const [isRequired, setIsRequired] = useState<boolean>(false);
   const { problems } = useAjaxStore();
 
   return (
@@ -21,9 +24,15 @@ function Quiz() {
       <Header />
       <div className="content">
         <div className="sidebar">
-          <SidebarList setCategory={setSelectedCategory} setDifficulty={setSelectedDifficulty} />
+          <SidebarList setCategory={setSelectedCategory} setDifficulty={setSelectedDifficulty} setSelectedProblemCnt={setSelectedProblemCnt} />
         </div>
-        <div className="main">{problems ? <ProblemList problems={problems} /> : <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} />}</div>
+        <div className="main">
+          {problems ? (
+            <ProblemList problems={problems} candidateName={candidateName} />
+          ) : (
+            <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} />
+          )}
+        </div>
       </div>
     </Container>
   );

@@ -12,7 +12,7 @@ export interface Problem {
 
 interface ProblemStore {
   problems: Problem[] | null;
-  getProblems: (difficulty: string, category_number: number) => void;
+  getProblems: (difficulty: string, category_number: number, cnt: number) => void;
 }
 
 //https://opentdb.com/api.php?amount=10&type=multiple 수량 / 타입
@@ -21,7 +21,7 @@ interface ProblemStore {
 
 const ajaxStore = create<ProblemStore>((set) => ({
   problems: null,
-  getProblems: async (_difficulty, category_number) => {
+  getProblems: async (_difficulty, category_number, cnt) => {
     try {
       let difficulty = "";
       let category = "";
@@ -29,7 +29,7 @@ const ajaxStore = create<ProblemStore>((set) => ({
       if (category_number !== -1) category += `&category=${category_number}`;
       const {
         data: { results },
-      } = await axios.get(process.env.REACT_APP_API_URL + `amount=10` + category + difficulty + "&type=multiple");
+      } = await axios.get(process.env.REACT_APP_API_URL + `amount=${cnt}` + category + difficulty + "&type=multiple");
 
       set(() => ({
         problems: results,

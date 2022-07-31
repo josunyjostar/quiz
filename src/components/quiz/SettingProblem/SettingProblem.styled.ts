@@ -23,6 +23,21 @@ const Container = styled(Btn)`
           color: dodgerblue;
           text-transform: uppercase;
         }
+        input {
+          color: #fff;
+          width: 150px;
+          font-size: ${(props) => props.theme.contentfontSize_web};
+          background: dodgerblue;
+
+          border: none;
+          border-radius: 5px;
+          padding: 3px 0px;
+          padding-left: 7px;
+          font-weight: bold;
+        }
+        input::placeholder {
+          color: snow;
+        }
       }
     }
     button {

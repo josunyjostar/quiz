@@ -1,37 +1,53 @@
 import styled from "styled-components";
 const Container = styled.div`
   height: 100%;
-  h6 {
-    text-align: center;
-    font-weight: bold;
-    font-size: ${(props) => props.theme.h6FontSize_web};
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+
   position: relative;
-  .option {
+  .option-shell {
+    h6 {
+      text-align: center;
+      font-weight: bold;
+      font-size: ${(props) => props.theme.h6FontSize_web};
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
     display: flex;
     flex-direction: column;
     position: sticky;
     top: 0;
-    .option-select {
+    .option-select-section {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 7px;
       font-size: ${(props) => props.theme.contentfontSize_web};
+      padding: 0 5px;
+      .option-select {
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        .left {
+          flex: 6;
+        }
+        .right {
+          flex: 5;
+          font-family: Arial;
+          margin-left: 5px;
 
-      .select {
-        font-family: Arial;
-        margin-left: 5px;
+          select,
+          input {
+            font-size: ${(props) => props.theme.contentfontSize_web};
+            background: #ddd;
 
-        select {
-          font-size: ${(props) => props.theme.contentfontSize_web};
-          background: #ddd;
-
-          border: none;
-          border-radius: 5px;
-          padding: 1px 2px;
+            border: none;
+            border-radius: 5px;
+            padding: 1px 2px;
+          }
+          input {
+            width: 84px;
+            padding-left: 5px;
+          }
         }
       }
     }

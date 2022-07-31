@@ -7,9 +7,10 @@ import Container from "./ProblemList.styled";
 
 interface Props {
   problems: Problem[];
+  candidateName: string;
 }
 
-function ProblemList({ problems }: Props) {
+function ProblemList({ problems, candidateName }: Props) {
   const [idx, setIdx] = useState<number>(1);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
@@ -71,6 +72,7 @@ function ProblemList({ problems }: Props) {
   return (
     <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
       <div className="progress">
+        <span className="current-progress">{`응시자 이름: ${candidateName}`}</span>
         {isEnd ? <span className="current-progress">마지막 문제 입니다.</span> : <span className="current-progress">{`total ${idx}/${problems.length}`}</span>}
         <Timer isEnd={isEnd && isSelected} />
       </div>
