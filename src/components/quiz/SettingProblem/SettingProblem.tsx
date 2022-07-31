@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Container from "./SettingProblem.styled";
 import ajaxStore from "../../../store/ajaxStore";
 import { SelectedCategory } from "../../../page/Quiz";
-
+import { useNavigate } from "react-router-dom";
 interface Props {
   data: SelectedCategory;
   difficulty: string;
@@ -14,13 +14,14 @@ interface Props {
 function SettingProblem({ data, difficulty, cnt, setCandidateName, setIsRequired }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { getProblems } = ajaxStore();
-
+  const navigate = useNavigate();
   function testStart() {
     // eslint-disable-next-line
     if (inputRef.current!.value) {
       // eslint-disable-next-line
       setCandidateName(inputRef.current!.value);
       getProblems(difficulty, data.category_number, cnt);
+      navigate("/test");
     } else {
       setIsRequired(true);
     }

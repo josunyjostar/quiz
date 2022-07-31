@@ -6,6 +6,7 @@ import useAjaxStore from "../store/ajaxStore";
 import SettingProblem from "../components/quiz/SettingProblem/SettingProblem";
 import ProblemList from "../components/quiz/ProblemList/ProblemList";
 import Popup from "../components/quiz/Popup/Popup";
+import { Route, Routes } from "react-router-dom";
 export interface SelectedCategory {
   category: string;
   category_number: number;
@@ -28,11 +29,13 @@ function Quiz() {
         </div>
         <div className="main">
           {isRequired ? <Popup setIsRequired={setIsRequired} /> : null}
-          {problems ? (
-            <ProblemList problems={problems} candidateName={candidateName} />
-          ) : (
-            <SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} setIsRequired={setIsRequired} />
-          )}
+          <Routes>
+            <Route
+              path="/"
+              element={<SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} setIsRequired={setIsRequired} />}
+            />
+            <Route path="/test" element={<ProblemList problems={problems} candidateName={candidateName} />} />
+          </Routes>
         </div>
       </div>
     </Container>

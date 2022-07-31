@@ -11,7 +11,7 @@ export interface Problem {
 }
 
 interface ProblemStore {
-  problems: Problem[] | null;
+  problems: Problem[];
   testResults: TestResult[];
   getProblems: (difficulty: string, category_number: number, cnt: number) => void;
   submitTest: (paper: TestResult) => void;
@@ -34,7 +34,7 @@ export interface TestResult {
 //https://opentdb.com/api.php?amount=10&category=11&difficulty=hard&type=multiple 난이도 추가
 
 const ajaxStore = create<ProblemStore>((set) => ({
-  problems: null,
+  problems: [],
   testResults: [],
   getProblems: async (_difficulty, category_number, cnt) => {
     try {
@@ -59,6 +59,11 @@ const ajaxStore = create<ProblemStore>((set) => ({
   submitTest: (paper: TestResult) => {
     set((state) => {
       return { testResults: [...state.testResults, paper] };
+    });
+  },
+  resetProblems: () => () => {
+    set((state) => {
+      return { ...state, problems: [] };
     });
   },
 }));

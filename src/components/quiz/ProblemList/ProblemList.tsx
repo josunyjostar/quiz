@@ -90,6 +90,10 @@ function ProblemList({ problems, candidateName }: Props) {
     console.log(paper);
   }
 
+  if (problems.length <= 0) {
+    return <h1>문제로딩 작성란</h1>;
+  }
+
   return (
     <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
       <div className="progress">
