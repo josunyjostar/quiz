@@ -8,15 +8,22 @@ interface Props {
   difficulty: string;
   cnt: number;
   setCandidateName: React.Dispatch<React.SetStateAction<string>>;
+  setIsRequired: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function SettingProblem({ data, difficulty, cnt, setCandidateName }: Props) {
+function SettingProblem({ data, difficulty, cnt, setCandidateName, setIsRequired }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { getProblems } = ajaxStore();
 
   function testStart() {
-    getProblems(difficulty, data.category_number, cnt);
-    setCandidateName(inputRef.current!.value);
+    // eslint-disable-next-line
+    if (inputRef.current!.value) {
+      // eslint-disable-next-line
+      setCandidateName(inputRef.current!.value);
+      getProblems(difficulty, data.category_number, cnt);
+    } else {
+      setIsRequired(true);
+    }
   }
 
   return (
@@ -43,7 +50,7 @@ function SettingProblem({ data, difficulty, cnt, setCandidateName }: Props) {
             </div>
             <div>
               {`: `}
-              <input ref={inputRef} type="text" placeholder="성함을 입력하세요"></input>
+              <input ref={inputRef} type="text" placeholder="성함을 입력하세요" />
             </div>
           </div>
         </div>
