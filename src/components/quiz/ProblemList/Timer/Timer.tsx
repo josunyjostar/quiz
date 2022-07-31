@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { useInterval } from "../../../../utils/CustomHook";
 
@@ -11,9 +11,10 @@ const Container = styled.span`
 
 interface Props {
   isEnd: boolean;
+  setRunTime: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Timer({ isEnd }: Props) {
+function Timer({ isEnd, setRunTime }: Props) {
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [hour, setHour] = useState<number>(0);
@@ -36,8 +37,27 @@ function Timer({ isEnd }: Props) {
       }
     });
   }, [setMinutes, setSeconds, setHour, isEnd]);
-
   useInterval(count, 1000);
+
+  useEffect(() => {
+    let t = "";
+    if (hour < 10) {
+      t += `0${hour}:`;
+    } else {
+      t += `${hour}:`;
+    }
+    if (minutes < 10) {
+      t += `0${minutes}:`;
+    } else {
+      t += `${minutes}:`;
+    }
+    if (seconds < 10) {
+      t += `0${seconds}`;
+    } else {
+      t += `${seconds}`;
+    }
+    setRunTime(t);
+  }, [isEnd]);
 
   return (
     <Container>

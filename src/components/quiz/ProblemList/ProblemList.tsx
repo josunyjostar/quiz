@@ -4,7 +4,9 @@ import Hr from "../../common/Hr.styled";
 import NextProcessBtn from "./NextProcessBtn/NextProcessBtn";
 import Timer from "./Timer/Timer";
 import Container from "./ProblemList.styled";
-
+import { ProblemResult, TestResult } from "../../../store/ajaxStore";
+import moment from "moment";
+import ajaxStore from "../../../store/ajaxStore";
 interface Props {
   problems: Problem[];
   candidateName: string;
@@ -15,12 +17,16 @@ function ProblemList({ problems, candidateName }: Props) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("setAnswer");
+  const [runTime, setRunTime] = useState<string>("00:00:00");
   const [selectedAnswer, setSelectedAnswer] = useState<string>("setSelectedAnswer");
+  const [ansewerPaper, setAnsewerPaper] = useState<Array<ProblemResult>>([]);
 
   const offset: number = idx - 1;
   const isEnd: boolean = problems.length === idx;
 
   // console.log(idx + 1, "선택됨", isSelected, "정답확인", isOpenAnswer);
+  const { submitTest } = ajaxStore();
+  console.log(ansewerPaper);
 
   function stateInit() {
     setIsSelected(() => false);
@@ -56,11 +62,15 @@ function ProblemList({ problems, candidateName }: Props) {
   }
 
   function openAnswer() {
-    setOpenAnswer(() => true);
-    if (answer === selectedAnswer) {
-      console.log("정답");
-    } else {
-      console.log("오답");
+    if (!isOpenAnswer) {
+      setOpenAnswer(() => true);
+      const submit: ProblemResult = { problemNumber: idx, result: false };
+      if (answer === selectedAnswer) {
+        submit.result = true;
+      } else {
+        submit.result = false;
+      }
+      setAnsewerPaper((pre) => [...pre, submit]);
     }
   }
 
@@ -69,12 +79,23 @@ function ProblemList({ problems, candidateName }: Props) {
     setIdx((pre) => pre + 1);
   }
 
+  function submitPaper() {
+    const paper: TestResult = {
+      candidateName: candidateName,
+      testDate: moment().format("MM-DD"),
+      totalTime: runTime,
+      results: ansewerPaper,
+    };
+    submitTest(paper);
+    console.log(paper);
+  }
+
   return (
     <Container isOpenAnswer={isOpenAnswer} isSelected={isSelected}>
       <div className="progress">
         <span className="current-progress">{`응시자 이름: ${candidateName}`}</span>
         {isEnd ? <span className="current-progress">마지막 문제 입니다.</span> : <span className="current-progress">{`total ${idx}/${problems.length}`}</span>}
-        <Timer isEnd={isEnd && isSelected} />
+        <Timer isEnd={isEnd && isSelected} setRunTime={setRunTime} />
       </div>
       {problems.slice(offset, offset + 1).map((v, i) => {
         if (!v.incorrect_answers.includes(v.correct_answer)) {
@@ -118,7 +139,7 @@ function ProblemList({ problems, candidateName }: Props) {
                     </div>
                   );
                 })}
-                <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} nextProblem={nextProblem} isEnd={isEnd} />
+                <NextProcessBtn isSelected={isSelected} openAnswer={openAnswer} isOpenAnswer={isOpenAnswer} nextProblem={nextProblem} isEnd={isEnd} submitTest={submitPaper} />
               </div>
             </div>
           </div>

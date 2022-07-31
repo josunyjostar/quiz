@@ -3,7 +3,7 @@ import GlobalStyle from "./styles/GlobalStyle";
 import Theme from "./styles/Theme";
 import styled, { ThemeProvider } from "styled-components";
 import Quiz from "./page/Quiz";
-
+import "moment/locale/ko";
 const RootLayout = styled.div`
   width: 100%;
   height: 100vh;
