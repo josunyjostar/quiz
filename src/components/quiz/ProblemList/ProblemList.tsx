@@ -116,7 +116,7 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
           v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
         }
         return (
-          <div key={i} className="shell">
+          <div key={`${v.question}${i}`} className="shell">
             <div className="inner">
               <div>
                 <strong>{`${offset + 1}. ${v.question}`}</strong>

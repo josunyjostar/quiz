@@ -52,7 +52,7 @@ function SidebarList({ setCategory, setDifficulty, setSelectedProblemCnt }: Prop
       <div className="category">
         {category.map((v, i) => {
           return (
-            <div key={i} className="topic">
+            <div key={`${v}${i}`} className="topic">
               <span>{v.category}</span>
               <button
                 onClick={() => {
