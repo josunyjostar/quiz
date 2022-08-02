@@ -22,7 +22,10 @@ function WrongAnswerNote() {
   function restart() {
     navigate("/");
   }
-  console.log(incorrect);
+
+  function result() {
+    navigate("/result");
+  }
 
   return (
     <Container>
@@ -45,8 +48,11 @@ function WrongAnswerNote() {
             );
           })}
         </div>
-        <button className="btn" onClick={restart}>
+        <button className="btn restart" onClick={restart}>
           처음으로
+        </button>
+        <button className="btn result" onClick={result}>
+          결과보기
         </button>
       </div>
     </Container>

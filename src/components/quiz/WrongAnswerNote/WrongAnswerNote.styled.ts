@@ -41,8 +41,6 @@ const Container = styled.div`
 
     .btn {
       position: fixed;
-      bottom: 30px;
-      right: 40px;
 
       font-size: 15px;
       border: none;
@@ -55,6 +53,14 @@ const Container = styled.div`
     }
     .btn:hover {
       background-color: #01a3a4;
+    }
+    .restart {
+      bottom: 30px;
+      right: 40px;
+    }
+    .result {
+      bottom: 30px;
+      right: 130px;
     }
   }
 `;
