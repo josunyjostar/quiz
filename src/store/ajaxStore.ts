@@ -37,10 +37,6 @@ export interface TestResult {
   difficulty: string;
 }
 
-//https://opentdb.com/api.php?amount=10&type=multiple 수량 / 타입
-//https://opentdb.com/api.php?amount=10&category=21&type=multiple 카테고리 추가
-//https://opentdb.com/api.php?amount=10&category=11&difficulty=hard&type=multiple 난이도 추가
-
 const ajaxStore = create<ProblemStore>(
   persist(
     {

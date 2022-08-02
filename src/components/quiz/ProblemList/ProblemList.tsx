@@ -31,7 +31,6 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
 
   // console.log(idx + 1, "선택됨", isSelected, "정답확인", isOpenAnswer);
   const { submitTest } = ajaxStore();
-  console.log(ansewerPaper);
 
   function stateInit() {
     setIsSelected(() => false);
@@ -95,7 +94,6 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
     };
     submitTest(paper);
     navigate("/result");
-    console.log(paper);
   }
 
   if (problems.length <= 0) {
