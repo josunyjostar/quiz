@@ -22,6 +22,7 @@ function WrongAnswerNote() {
   function restart() {
     navigate("/");
   }
+  console.log(incorrect);
 
   return (
     <Container>

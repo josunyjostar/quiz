@@ -69,7 +69,8 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
   function openAnswer() {
     if (!isOpenAnswer) {
       setOpenAnswer(() => true);
-      const submit: ProblemResult = { problemNumber: idx, result: false, problem: problems[idx] };
+      console.log(idx);
+      const submit: ProblemResult = { problemNumber: idx, result: false, problem: problems[idx - 1] };
       if (answer === selectedAnswer) {
         submit.result = true;
       } else {
@@ -97,8 +98,6 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
     submitTest(paper);
     navigate("/result");
   }
-
-  console.log(problems.length);
 
   if (problems.length <= 0) {
     return <Loading />;
