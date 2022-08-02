@@ -1,62 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import ajaxStore from "../../../store/ajaxStore";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useNavigate } from "react-router-dom";
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  .shell {
-    width: 400px;
-    padding-bottom: 200px;
-    .item {
-      font-size: ${(props) => props.theme.resultFontSz_web};
-      text-transform: uppercase;
-      margin: 10px 0;
-      display: flex;
-
-      span {
-        flex: 1;
-      }
-      em {
-        flex: 2;
-        text-align: center;
-      }
-    }
-
-    .chart {
-      display: flex;
-      font-size: ${(props) => props.theme.resultFontSz_web};
-      width: 100%;
-      margin: 30px 0;
-      /* border: 1px solid red; */
-      .left {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        width: 130px;
-      }
-      .right {
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-top: 50px;
-        span {
-          margin: 0 9px;
-        }
-        .percent {
-          margin-top: 25px;
-        }
-      }
-    }
-  }
-`;
+import Container from "./ResultPage.styled";
 
 function ResultPage() {
   const { curResult } = ajaxStore();
@@ -94,6 +41,10 @@ function ResultPage() {
     navigate("/");
   }
 
+  function worngAnswerNote() {
+    console.log("오답노트");
+  }
+
   return (
     <Container>
       <div className="shell">
@@ -126,7 +77,14 @@ function ResultPage() {
         <div className="item">
           <span>소요 시간</span>:<em>{totalTime}</em>
         </div>
-        <button onClick={restart}>처음으로</button>
+        <div className="btn">
+          <button onClick={restart} className="restart">
+            다시풀기
+          </button>
+          <button onClick={worngAnswerNote} className="wrong">
+            오답노트
+          </button>
+        </div>
       </div>
     </Container>
   );
