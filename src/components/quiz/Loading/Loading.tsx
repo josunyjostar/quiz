@@ -9,7 +9,7 @@ const Container = styled.div`
 
   .loader {
     border: 16px solid Gainsboro;
-    border-top: 16px solid MediumSeaGreen;
+    border-top: 16px solid dodgerblue;
     border-radius: 50%;
     width: 50%;
     width: 80px;
