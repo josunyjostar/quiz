@@ -4,8 +4,7 @@
 
 간단한 퀴즈 웹앱
 
-[Usage]
-#dev
-cd .\client\  
-npm i  
+[Usage]     
+#dev       
+npm i      
 npm start
