@@ -69,7 +69,6 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
   function openAnswer() {
     if (!isOpenAnswer) {
       setOpenAnswer(() => true);
-      console.log(idx);
       const submit: ProblemResult = { problemNumber: idx, result: false, problem: problems[idx - 1] };
       if (answer === selectedAnswer) {
         submit.result = true;
