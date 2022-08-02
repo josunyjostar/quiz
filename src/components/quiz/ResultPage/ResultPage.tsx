@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ajaxStore from "../../../store/ajaxStore";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -59,10 +60,11 @@ const Container = styled.div`
 
 function ResultPage() {
   const { curResult } = ajaxStore();
+  const navigate = useNavigate();
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   if (!curResult) {
-    return <h1>1</h1>;
+    return <h1>최종 제출 데이터 없을 시 예외처리 할 장소</h1>;
   }
 
   const { candidateName, category, difficulty, testDate, totalTime, results } = curResult;
@@ -87,6 +89,10 @@ function ResultPage() {
       },
     ],
   };
+
+  function restart() {
+    navigate("/");
+  }
 
   return (
     <Container>
@@ -120,6 +126,7 @@ function ResultPage() {
         <div className="item">
           <span>소요 시간</span>:<em>{totalTime}</em>
         </div>
+        <button onClick={restart}>처음으로</button>
       </div>
     </Container>
   );

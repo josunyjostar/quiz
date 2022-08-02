@@ -117,20 +117,22 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
         }
         return (
           <div key={i} className="shell">
-            <div>
-              <strong>{`${offset + 1}. ${v.question}`}</strong>
-              <div className="property">
-                (
-                <span>
-                  category:<em>{v.category}</em>
-                </span>
-                /
-                <span>
-                  difficulty:<em>{v.difficulty}</em>
-                </span>
-                )
+            <div className="inner">
+              <div>
+                <strong>{`${offset + 1}. ${v.question}`}</strong>
+                <div className="property">
+                  (
+                  <span>
+                    category:<em>{v.category}</em>
+                  </span>
+                  /
+                  <span>
+                    difficulty:<em>{v.difficulty}</em>
+                  </span>
+                  )
+                </div>
+                <Hr />
               </div>
-              <Hr />
               <div onClick={checkOnly} className="question-shell">
                 {v.incorrect_answers.map((val, i) => {
                   const isCorrect = val === v.correct_answer;
