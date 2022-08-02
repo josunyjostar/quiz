@@ -1,5 +1,10 @@
 import create from "zustand";
 import axios from "axios";
+import { configurePersist } from "zustand-persist";
+import { devtools } from "zustand/middleware";
+const { persist } = configurePersist({
+  storage: sessionStorage, // 세션스토리지에 저장
+});
 
 export interface Problem {
   category: string;
@@ -36,40 +41,49 @@ export interface TestResult {
 //https://opentdb.com/api.php?amount=10&category=21&type=multiple 카테고리 추가
 //https://opentdb.com/api.php?amount=10&category=11&difficulty=hard&type=multiple 난이도 추가
 
-const ajaxStore = create<ProblemStore>((set) => ({
-  problems: [],
-  curResult: null,
-  testResults: [],
-  getProblems: async (_difficulty, category_number, cnt) => {
-    try {
-      let difficulty = "";
-      let category = "";
-      if (_difficulty !== "random") difficulty += `&difficulty=${_difficulty}`;
-      if (category_number !== -1) category += `&category=${category_number}`;
-      const {
-        data: { results },
-      } = await axios.get(process.env.REACT_APP_API_URL + `amount=${cnt}` + category + difficulty + "&type=multiple");
+const ajaxStore = create<ProblemStore>(
+  persist(
+    {
+      key: "ajax",
+      allowlist: ["problems", "curResult", "testResults"],
+      denylist: [],
+    },
+    devtools((set) => ({
+      problems: [],
+      curResult: null,
+      testResults: [],
+      getProblems: async (_difficulty, category_number, cnt) => {
+        try {
+          let difficulty = "";
+          let category = "";
+          if (_difficulty !== "random") difficulty += `&difficulty=${_difficulty}`;
+          if (category_number !== -1) category += `&category=${category_number}`;
+          const {
+            data: { results },
+          } = await axios.get(process.env.REACT_APP_API_URL + `amount=${cnt}` + category + difficulty + "&type=multiple");
 
-      set(() => ({
-        problems: results,
-      }));
-    } catch (err) {
-      console.log("getProblems error:::", err);
-      set((state) => ({
-        ...state,
-      }));
-    }
-  },
-  submitTest: (paper: TestResult) => {
-    set((state) => {
-      return { testResults: [...state.testResults, paper], curResult: paper };
-    });
-  },
-  resetProblems: () => () => {
-    set((state) => {
-      return { ...state, problems: [] };
-    });
-  },
-}));
+          set(() => ({
+            problems: results,
+          }));
+        } catch (err) {
+          console.log("getProblems error:::", err);
+          set((state) => ({
+            ...state,
+          }));
+        }
+      },
+      submitTest: (paper: TestResult) => {
+        set((state) => {
+          return { testResults: [...state.testResults, paper], curResult: paper };
+        });
+      },
+      resetProblems: () => () => {
+        set((state) => {
+          return { ...state, problems: [] };
+        });
+      },
+    })),
+  ),
+);
 
 export default ajaxStore;

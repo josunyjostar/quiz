@@ -8,12 +8,12 @@ const Container = styled.div`
   height: 100%;
 
   .loader {
-    border: 16px solid Gainsboro;
-    border-top: 16px solid dodgerblue;
+    border: 8px solid Gainsboro;
+    border-top: 8px solid dodgerblue;
     border-radius: 50%;
     width: 50%;
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     animation: spin 2s cubic-bezier(0.35, 0.73, 1, 0.47) infinite;
   }
 
