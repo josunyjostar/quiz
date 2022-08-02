@@ -49,6 +49,34 @@ const Container = styled.div`
         }
       }
     }
+
+    .btn {
+      margin: 30px 10px;
+      display: flex;
+      justify-content: space-around;
+
+      button {
+        font-size: ${(props) => props.theme.resultFontSz_web};
+        border: none;
+        border-radius: ${(props) => props.theme.borderRadius};
+        margin-right: 60px;
+        padding: 3px 8px;
+        transition: background-color 0.2s ease;
+        color: #222;
+      }
+      .restart {
+        background-color: #00cec9;
+      }
+      .wrong {
+        background-color: #fab1a0;
+      }
+      .restart:hover {
+        background-color: #00b894;
+      }
+      .wrong:hover {
+        background-color: #e17055;
+      }
+    }
   }
 `;
 
