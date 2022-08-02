@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/quiz/Header/Header";
 import SidebarList from "../components/quiz/SidebarList/SidebarList";
 import Container from "./Quiz.styled";
-import useAjaxStore from "../store/ajaxStore";
+
 import SettingProblem from "../components/quiz/SettingProblem/SettingProblem";
 import ProblemList from "../components/quiz/ProblemList/ProblemList";
 import Popup from "../components/quiz/Popup/Popup";
@@ -19,7 +19,6 @@ function Quiz() {
   const [selectedProblemCnt, setSelectedProblemCnt] = useState<number>(10);
   const [candidateName, setCandidateName] = useState<string>("");
   const [isRequired, setIsRequired] = useState<boolean>(false);
-  const { problems } = useAjaxStore();
 
   return (
     <Container>
@@ -35,7 +34,7 @@ function Quiz() {
               path="/"
               element={<SettingProblem data={selectedCategory} difficulty={selectedDifficulty} cnt={selectedProblemCnt} setCandidateName={setCandidateName} setIsRequired={setIsRequired} />}
             />
-            <Route path="/test" element={<ProblemList problems={problems} candidateName={candidateName} selectedDifficulty={selectedDifficulty} selectedCategory={selectedCategory.category} />} />
+            <Route path="/test" element={<ProblemList candidateName={candidateName} selectedDifficulty={selectedDifficulty} selectedCategory={selectedCategory.category} />} />
             <Route path="/result" element={<ResultPage />} />
           </Routes>
         </div>

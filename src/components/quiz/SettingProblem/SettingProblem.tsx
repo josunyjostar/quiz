@@ -13,13 +13,14 @@ interface Props {
 
 function SettingProblem({ data, difficulty, cnt, setCandidateName, setIsRequired }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { getProblems } = ajaxStore();
+  const { getProblems, resetProblems } = ajaxStore();
   const navigate = useNavigate();
   function testStart() {
     // eslint-disable-next-line
     if (inputRef.current!.value) {
       // eslint-disable-next-line
       setCandidateName(inputRef.current!.value);
+      resetProblems();
       getProblems(difficulty, data.category_number, cnt);
       navigate("/test");
     } else {

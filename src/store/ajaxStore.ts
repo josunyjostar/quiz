@@ -21,6 +21,7 @@ interface ProblemStore {
   testResults: TestResult[];
   getProblems: (difficulty: string, category_number: number, cnt: number) => void;
   submitTest: (paper: TestResult) => void;
+  resetProblems: () => void;
 }
 
 export interface ProblemResult {
@@ -73,9 +74,9 @@ const ajaxStore = create<ProblemStore>(
           return { testResults: [...state.testResults, paper], curResult: paper };
         });
       },
-      resetProblems: () => () => {
+      resetProblems: () => {
         set((state) => {
-          return { ...state, problems: [] };
+          return { ...state, problems: [], curResult: null };
         });
       },
     })),

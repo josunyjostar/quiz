@@ -9,14 +9,14 @@ import moment from "moment";
 import ajaxStore from "../../../store/ajaxStore";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import useAjaxStore from "../../../store/ajaxStore";
 interface Props {
-  problems: Problem[];
   candidateName: string;
   selectedDifficulty: string;
   selectedCategory: string;
 }
 
-function ProblemList({ problems, candidateName, selectedDifficulty, selectedCategory }: Props) {
+function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Props) {
   const [idx, setIdx] = useState<number>(1);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isOpenAnswer, setOpenAnswer] = useState<boolean>(false);
@@ -25,6 +25,7 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
   const [selectedAnswer, setSelectedAnswer] = useState<string>("setSelectedAnswer");
   const [ansewerPaper, setAnsewerPaper] = useState<Array<ProblemResult>>([]);
   const navigate = useNavigate();
+  const { problems } = useAjaxStore();
 
   const offset: number = idx - 1;
   const isEnd: boolean = problems.length === idx;
@@ -96,6 +97,8 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
     navigate("/result");
   }
 
+  console.log(problems.length);
+
   if (problems.length <= 0) {
     return <Loading />;
   }
@@ -107,14 +110,14 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
         {isEnd ? <span className="current-progress">마지막 문제 입니다.</span> : <span className="current-progress">{`total ${idx}/${problems.length}`}</span>}
         <Timer isEnd={isEnd && isSelected} setRunTime={setRunTime} />
       </div>
-      {problems.slice(offset, offset + 1).map((v, i) => {
+      {problems.slice(offset, offset + 1).map((v, _) => {
         if (!v.incorrect_answers.includes(v.correct_answer)) {
           setAnswer(v.correct_answer);
           const correctIdx = Math.floor(Math.random() * 4);
           v.incorrect_answers.splice(correctIdx, 0, v.correct_answer);
         }
         return (
-          <div key={`${v.question}${i}`} className="shell">
+          <div key={`${v.question}`} className="shell">
             <div className="inner">
               <div>
                 <strong>{`${offset + 1}. ${v.question}`}</strong>
@@ -135,7 +138,7 @@ function ProblemList({ problems, candidateName, selectedDifficulty, selectedCate
                 {v.incorrect_answers.map((val, i) => {
                   const isCorrect = val === v.correct_answer;
                   return (
-                    <div key={i} className="question">
+                    <div key={val} className="question">
                       <input type="checkbox" value={val} required id={`checked${i}`} disabled={isOpenAnswer} />
                       <label htmlFor={`checked${i}`}>
                         <span></span>
