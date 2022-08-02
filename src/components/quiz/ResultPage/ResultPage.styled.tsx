@@ -57,23 +57,27 @@ const Container = styled.div`
 
       button {
         font-size: ${(props) => props.theme.resultFontSz_web};
-        border: none;
+        /* border: none; */
         border-radius: ${(props) => props.theme.borderRadius};
         margin-right: 60px;
         padding: 3px 8px;
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
         color: #222;
       }
       .restart {
-        background-color: #00cec9;
+        border: 1px solid #00cec9;
+        background-color: ${(props) => props.theme.bgColor};
       }
       .wrong {
-        background-color: #fab1a0;
+        border: 1px solid #fab1a0;
+        background-color: ${(props) => props.theme.bgColor};
       }
       .restart:hover {
+        border: 1px solid #00b894;
         background-color: #00b894;
       }
       .wrong:hover {
+        border: 1px solid #e17055;
         background-color: #e17055;
       }
     }

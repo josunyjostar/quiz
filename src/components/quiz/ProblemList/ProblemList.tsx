@@ -69,12 +69,13 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
   function openAnswer() {
     if (!isOpenAnswer) {
       setOpenAnswer(() => true);
-      const submit: ProblemResult = { problemNumber: idx, result: false };
+      const submit: ProblemResult = { problemNumber: idx, result: false, problem: problems[idx] };
       if (answer === selectedAnswer) {
         submit.result = true;
       } else {
         submit.result = false;
       }
+      ``;
       setAnsewerPaper((pre) => [...pre, submit]);
     }
   }

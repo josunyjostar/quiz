@@ -27,6 +27,7 @@ interface ProblemStore {
 export interface ProblemResult {
   problemNumber: number;
   result: boolean;
+  problem: Problem;
 }
 
 export interface TestResult {

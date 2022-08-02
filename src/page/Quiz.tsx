@@ -8,6 +8,7 @@ import ProblemList from "../components/quiz/ProblemList/ProblemList";
 import Popup from "../components/quiz/Popup/Popup";
 import { Route, Routes } from "react-router-dom";
 import ResultPage from "../components/quiz/ResultPage/ResultPage";
+import WrongAnswerNote from "../components/quiz/WrongAnswerNote/WrongAnswerNote";
 export interface SelectedCategory {
   category: string;
   category_number: number;
@@ -36,6 +37,7 @@ function Quiz() {
             />
             <Route path="/test" element={<ProblemList candidateName={candidateName} selectedDifficulty={selectedDifficulty} selectedCategory={selectedCategory.category} />} />
             <Route path="/result" element={<ResultPage />} />
+            <Route path="/wrong-note" element={<WrongAnswerNote />} />
           </Routes>
         </div>
       </div>

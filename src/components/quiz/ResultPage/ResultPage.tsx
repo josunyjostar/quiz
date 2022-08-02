@@ -1,14 +1,11 @@
 import React from "react";
 import ajaxStore from "../../../store/ajaxStore";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useNavigate } from "react-router-dom";
 import Container from "./ResultPage.styled";
 
 function ResultPage() {
   const { curResult } = ajaxStore();
   const navigate = useNavigate();
-  ChartJS.register(ArcElement, Tooltip, Legend);
 
   if (!curResult) {
     return <h1>최종 제출 데이터 없을 시 예외처리 할 장소</h1>;
@@ -42,26 +39,12 @@ function ResultPage() {
   }
 
   function worngAnswerNote() {
-    console.log("오답노트");
+    navigate("/wrong-note");
   }
 
   return (
     <Container>
       <div className="shell">
-        <div className="chart">
-          <div className="left">
-            <Doughnut data={data} />
-          </div>
-          <div className="right">
-            <div>
-              <span>{`정답 ${correct}`}</span>
-              <span>{`오답 ${incorrect}`}</span>
-            </div>
-            <div className="percent">
-              <span>{`정답률 ${((correct / results.length) * 100).toFixed(2)}%`}</span>
-            </div>
-          </div>
-        </div>
         <div className="item">
           <span>응시자 이름</span>:<em>{candidateName}</em>
         </div>
