@@ -98,6 +98,10 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
     navigate("/result");
   }
 
+  function beginning() {
+    navigate("/");
+  }
+
   if (problems.length <= 0) {
     return <Loading />;
   }
@@ -159,6 +163,9 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
           </div>
         );
       })}
+      <button className="btn-first" onClick={beginning}>
+        처음으로
+      </button>
     </Container>
   );
 }

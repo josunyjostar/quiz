@@ -82,6 +82,23 @@ const Container = styled.div<StyledProps>`
       }
     }
   }
+  .btn-first {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+
+    font-size: 17px;
+    border: none;
+    border-radius: ${(props) => props.theme.borderRadius};
+    padding: 5px 7px;
+    background-color: ${(props) => props.theme.btnBgColor};
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: #fff;
+  }
+  .btn-first:hover {
+    background-color: ${(props) => props.theme.btnHoverColor};
+    color: #2d3436;
+  }
 `;
 
 export default Container;
