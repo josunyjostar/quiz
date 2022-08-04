@@ -49,7 +49,7 @@ function Popup({ setIsRequired }: Props) {
   return (
     <BlackScreen onClick={close}>
       <div className="popup">
-        <div>성함의 입력은 필수입니다.</div>
+        <div role="requierd">성함의 입력은 필수입니다.</div>
         <div>아무곳이나 click!</div>
       </div>
     </BlackScreen>
