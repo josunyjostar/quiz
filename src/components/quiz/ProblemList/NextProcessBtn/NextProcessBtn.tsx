@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "./NextProcessBtn.styled";
 
-interface Props {
+export interface Props {
   isSelected: boolean;
   isOpenAnswer: boolean;
   isEnd: boolean;
