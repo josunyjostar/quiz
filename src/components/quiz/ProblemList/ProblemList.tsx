@@ -54,7 +54,7 @@ function ProblemList({ candidateName, selectedDifficulty, selectedCategory }: Pr
         for (const key2 of list2.keys()) {
           if (list2[key2] instanceof HTMLInputElement) {
             if (cur === (list2[key2] as HTMLInputElement).value) {
-              isCheck = (list2[key2] as HTMLInputElement).checked = true;
+              isCheck = (list2[key2] as HTMLInputElement).checked;
               setSelectedAnswer((list2[key2] as HTMLInputElement).value);
               continue;
             }
