@@ -38,7 +38,7 @@ function ResultPage() {
   };
 
   function restart() {
-    navigate("/");
+    navigate("/test");
   }
 
   function worngAnswerNote() {
