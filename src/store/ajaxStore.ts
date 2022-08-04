@@ -46,7 +46,7 @@ const ajaxStore = create<ProblemStore>(
       allowlist: ["problems", "curResult", "testResults"],
       denylist: [],
     },
-    (set) => ({
+    devtools((set) => ({
       problems: [],
       curResult: null,
       testResults: [],
@@ -80,7 +80,7 @@ const ajaxStore = create<ProblemStore>(
           return { ...state, problems: [], curResult: null };
         });
       },
-    }),
+    })),
   ),
 );
 
