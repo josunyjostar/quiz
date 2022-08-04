@@ -3,7 +3,7 @@ import Container from "./SettingProblem.styled";
 import ajaxStore from "../../../store/ajaxStore";
 import { SelectedCategory } from "../../../page/Quiz";
 import { useNavigate } from "react-router-dom";
-interface Props {
+export interface Props {
   data: SelectedCategory;
   difficulty: string;
   cnt: number;
